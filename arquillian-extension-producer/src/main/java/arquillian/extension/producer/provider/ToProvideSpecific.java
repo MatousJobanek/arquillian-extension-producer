@@ -7,15 +7,15 @@ import java.lang.annotation.Target;
 
 import org.jboss.arquillian.test.api.ArquillianResource;
 
-import arquillian.extension.producer.ResourcesImpl;
+import arquillian.extension.producer.Resources;
 
 /**
- * Use this annotation in combination with annotation {@link ArquillianResource} to inject new instance of {@link ResourcesImpl}
+ * Use this annotation in combination with annotation {@link ArquillianResource} to inject new instance of {@link Resources}
  *
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
-public @interface ToProvide {
+public @interface ToProvideSpecific {
 
 }

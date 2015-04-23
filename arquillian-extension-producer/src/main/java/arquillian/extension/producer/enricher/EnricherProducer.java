@@ -14,15 +14,13 @@ import org.jboss.arquillian.test.spi.TestEnricher;
 
 import arquillian.extension.producer.ResourcesImpl;
 
-
 /**
- * Enriches test with an instance of the class {@link ResourcesImpl}
- * Injects new instance into every field or method parameter annotated with {@link ToEnrich}
- *
+ * Enriches test with an instance of the class {@link ResourcesImpl}.
+ * Injects new instance into every field or method parameter of the type {@link Resources} annotated with {@link ToEnrich}
+ * 
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
 public class EnricherProducer implements TestEnricher {
-
 
     @Override
     public void enrich(Object testCase) {
@@ -42,7 +40,7 @@ public class EnricherProducer implements TestEnricher {
         Object[] resolution = new Object[method.getParameterTypes().length];
 
         for (int i = 0; i < resolution.length; i++) {
-            if (parameters.get(i) == null){
+            if (parameters.get(i) == null) {
                 resolution[i] = null;
             } else {
                 resolution[i] = new ResourcesImpl("enriched in method");

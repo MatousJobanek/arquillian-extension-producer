@@ -2,10 +2,10 @@ package arquillian.extension.producer;
 
 /**
  * An implementation of some resources which should be injected into test class
- *
+ * 
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
-public class ResourcesImpl {
+public class ResourcesImpl implements Resources {
 
     private String parameter;
 

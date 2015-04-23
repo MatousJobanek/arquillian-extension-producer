@@ -5,10 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import arquillian.extension.producer.ResourcesImpl;
+import arquillian.extension.producer.Resources;
 
 /**
- * Use this annotation to inject new instance of {@link ResourcesImpl}
+ * Use this annotation to inject new instance of {@link Resources}
  *
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */

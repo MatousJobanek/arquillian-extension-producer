@@ -7,21 +7,23 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import arquillian.extension.producer.ResourcesImpl;
+import arquillian.extension.producer.Resources;
 import arquillian.extension.producer.enricher.ToEnrich;
-import arquillian.extension.producer.provider.ToProvide;
+import arquillian.extension.producer.provider.ToProvideSpecific;
 
 @RunWith(Arquillian.class)
 @RunAsClient
 public class MyProducerTest {
 
     @ToEnrich
-    private ResourcesImpl enrichedImplementation;
+    private Resources enrichedImplementation;
 
-    @ToProvide
     @ArquillianResource
-    private ResourcesImpl providedImplementation;
+    private Resources providedImplementation;
 
+    @ArquillianResource
+    @ToProvideSpecific
+    private Resources providedSpecificImplementation;
 
     @Test
     public void injectFieldsTest() {
@@ -29,15 +31,24 @@ public class MyProducerTest {
         Assert.assertEquals("enriched in field", enrichedImplementation.getParameter());
 
         Assert.assertNotNull(providedImplementation);
-        Assert.assertEquals("provided", providedImplementation.getParameter());
+        Assert.assertEquals("provided without any qualifier", providedImplementation.getParameter());
+
+        Assert.assertNotNull(providedSpecificImplementation);
+        Assert.assertEquals("provided with ToProvideSpecific qualifier", providedSpecificImplementation.getParameter());
     }
 
     @Test
-    public void injectParamsTest(@ToEnrich ResourcesImpl enrichedParam, @ToProvide @ArquillianResource ResourcesImpl providedParam) {
+    public void injectParamsTest(@ToEnrich Resources enrichedParam,
+        @ArquillianResource Resources providedParam,
+        @ArquillianResource @ToProvideSpecific Resources providedSpecificParam) {
+
         Assert.assertNotNull(enrichedParam);
         Assert.assertEquals("enriched in method", enrichedParam.getParameter());
 
         Assert.assertNotNull(providedParam);
-        Assert.assertEquals("provided", providedParam.getParameter());
+        Assert.assertEquals("provided without any qualifier", providedParam.getParameter());
+
+        Assert.assertNotNull(providedParam);
+        Assert.assertEquals("provided with ToProvideSpecific qualifier", providedSpecificParam.getParameter());
     }
 }
