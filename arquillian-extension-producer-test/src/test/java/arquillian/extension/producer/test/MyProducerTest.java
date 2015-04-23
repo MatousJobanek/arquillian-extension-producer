@@ -27,28 +27,31 @@ public class MyProducerTest {
 
     @Test
     public void injectFieldsTest() {
+        
         Assert.assertNotNull(enrichedImplementation);
-        Assert.assertEquals("enriched in field", enrichedImplementation.getParameter());
+        Assert.assertEquals("enriched into field", enrichedImplementation.getParameter());
 
         Assert.assertNotNull(providedImplementation);
-        Assert.assertEquals("provided without any qualifier", providedImplementation.getParameter());
+        Assert.assertEquals("provided into field without any qualifier", providedImplementation.getParameter());
 
         Assert.assertNotNull(providedSpecificImplementation);
-        Assert.assertEquals("provided with ToProvideSpecific qualifier", providedSpecificImplementation.getParameter());
+        Assert.assertEquals("provided into field with ToProvideSpecific qualifier",
+            providedSpecificImplementation.getParameter());
     }
 
     @Test
-    public void injectParamsTest(@ToEnrich Resources enrichedParam,
+    public void injectParamsTest(
+        @ToEnrich Resources enrichedParam,
         @ArquillianResource Resources providedParam,
         @ArquillianResource @ToProvideSpecific Resources providedSpecificParam) {
 
         Assert.assertNotNull(enrichedParam);
-        Assert.assertEquals("enriched in method", enrichedParam.getParameter());
+        Assert.assertEquals("enriched into method", enrichedParam.getParameter());
 
         Assert.assertNotNull(providedParam);
-        Assert.assertEquals("provided without any qualifier", providedParam.getParameter());
+        Assert.assertEquals("provided into method without any qualifier", providedParam.getParameter());
 
         Assert.assertNotNull(providedParam);
-        Assert.assertEquals("provided with ToProvideSpecific qualifier", providedSpecificParam.getParameter());
+        Assert.assertEquals("provided into method with ToProvideSpecific qualifier", providedSpecificParam.getParameter());
     }
 }

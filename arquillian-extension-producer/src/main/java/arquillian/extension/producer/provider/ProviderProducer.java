@@ -9,7 +9,7 @@ import arquillian.extension.producer.Resources;
 import arquillian.extension.producer.ResourcesImpl;
 
 /**
- * Provides to test an instance of the class {@link ResourcesImpl}.
+ * Provides to test class an instance of the class {@link ResourcesImpl}.
  * Injects new instance into every field or method parameter of the type {@link Resources} annotated with
  * {@link ArquillianResource}. It also distinguish injection targets annotated with an qualifier {@link ToProvideSpecific}.
  * 
@@ -25,18 +25,48 @@ public class ProviderProducer implements ResourceProvider {
     @Override
     public Object lookup(ArquillianResource resource, Annotation... qualifiers) {
 
-        // injection without a qualifier
-        if (qualifiers.length == 0) {
-            return new ResourcesImpl("provided without any qualifier");
+        boolean isClassInjection = false;
+        boolean isMethodInjection = false;
+        boolean hasSpecificQualifier = false;
+
+        // Check for the presence of possible qualifiers
+        for (Annotation a : qualifiers) {
+            Class<? extends Annotation> annotationType = a.annotationType();
+
+            if (annotationType.equals(ToProvideSpecific.class)) {
+                hasSpecificQualifier = true;
+
+            } else if (annotationType.equals(ResourceProvider.ClassInjection.class)) {
+                isClassInjection = true;
+
+            } else if (annotationType.equals(ResourceProvider.MethodInjection.class)) {
+                isMethodInjection = true;
+            }
         }
 
-        // injection with some qualifier(s)
-        for (Annotation a : qualifiers) {
-            if (a.annotationType().equals(ToProvideSpecific.class)) {
-                return new ResourcesImpl("provided with ToProvideSpecific qualifier");
+        if (isClassInjection) {
+
+            if (hasSpecificQualifier) {
+                // returns some specific implementation into the field injection point regarding to the used qualifier
+                return new ResourcesImpl("provided into field with ToProvideSpecific qualifier");
             }
+
+            // returns the default implementation into the field injection point
+            return new ResourcesImpl("provided into field without any qualifier");
+
+        } else if (isMethodInjection) {
+
+            if (hasSpecificQualifier) {
+                // returns some specific implementation into the method param injection point regarding to the used
+                // qualifier
+                return new ResourcesImpl("provided into method with ToProvideSpecific qualifier");
+            }
+
+            // returns the default implementation into the method param injection point
+            return new ResourcesImpl("provided into method without any qualifier");
         }
 
         return null;
     }
+
 }
