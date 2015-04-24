@@ -6,4 +6,4 @@ This master branch is for arquillian 1.1.8.Final. In this release there have bee
 - @ResourceProvider.MethodInjection
 
 
-If you need an implementation for the previous version, please see the arquillain [1.1.7.Final branch](https://github.com/MatousJobanek/arquillian-extension-producer/tree/arquillian-1.1.7.Final)
+If you need an implementation for the previous version, please see the [arquillian-1.1.7.Final branch](https://github.com/MatousJobanek/arquillian-extension-producer/tree/arquillian-1.1.7.Final)
