@@ -28,7 +28,7 @@ public class EnricherProducer implements TestEnricher {
         List<Field> fields = getFieldsWithAnnotation(testCase.getClass(), ToEnrich.class);
         for (Field field : fields) {
             try {
-                setFieldValue(testCase, field, new ResourcesImpl("enriched in field"));
+                setFieldValue(testCase, field, new ResourcesImpl("enriched into field"));
             } catch (Exception e) {
                 throw new RuntimeException("Could not inject object on field " + field, e);
             }
@@ -44,7 +44,7 @@ public class EnricherProducer implements TestEnricher {
             if (parameters.get(i) == null) {
                 resolution[i] = null;
             } else {
-                resolution[i] = new ResourcesImpl("enriched in method");
+                resolution[i] = new ResourcesImpl("enriched into method");
             }
         }
 

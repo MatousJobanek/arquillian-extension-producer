@@ -11,8 +11,8 @@ import arquillian.extension.producer.ResourcesImpl;
 /**
  * Provides to test class an instance of the class {@link ResourcesImpl}.
  * Injects new instance into every field or method parameter of the type {@link Resources} annotated with
- * {@link ArquillianResource}. It also distinguish injection targets annotated with an qualifier {@link ToProvideSpecific}.
- * 
+ * {@link ArquillianResource}. It also distinguish injection points annotated with an qualifier {@link ToProvideSpecific}.
+ *
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
 public class ProviderProducer implements ResourceProvider {
