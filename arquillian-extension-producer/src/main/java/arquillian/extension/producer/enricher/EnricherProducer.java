@@ -12,12 +12,13 @@ import java.util.List;
 
 import org.jboss.arquillian.test.spi.TestEnricher;
 
+import arquillian.extension.producer.Resources;
 import arquillian.extension.producer.ResourcesImpl;
 
 /**
- * Enriches test with an instance of the class {@link ResourcesImpl}.
+ * Enriches a test with an instance of the {@link ResourcesImpl} - an implementation of {@link Resources}.
  * Injects new instance into every field or method parameter of the type {@link Resources} annotated with {@link ToEnrich}
- * 
+ *
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
 public class EnricherProducer implements TestEnricher {
@@ -50,7 +51,15 @@ public class EnricherProducer implements TestEnricher {
         return resolution;
     }
 
-    static void setFieldValue(final Object instance, final Field field, final Object value) {
+    /**
+     * Sets the field represented by Field object on the specified object argument to the specified new value. The new value is
+     * automatically unwrapped if the underlying field has a primitive type.
+     *
+     * @param instance - the object whose field should be modified
+     * @param field - the field that should be modified
+     * @param value - the new value for the field of obj being modified
+     */
+    private void setFieldValue(final Object instance, final Field field, final Object value) {
         try {
             AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
                 public Void run() throws IllegalArgumentException, IllegalAccessException {
@@ -79,7 +88,14 @@ public class EnricherProducer implements TestEnricher {
         }
     }
 
-    public static List<Field> getFieldsWithAnnotation(final Class<?> source, final Class<? extends Annotation> annotationClass) {
+    /**
+     * Returns all the fields annotated with the given annotation
+     *
+     * @param source - the class where the fields should be examined in
+     * @param annotationClass - the annotation the fields should be annotated with
+     * @return list of found fields annotated with the given annotation
+     */
+    private List<Field> getFieldsWithAnnotation(final Class<?> source, final Class<? extends Annotation> annotationClass) {
         List<Field> declaredAccessableFields = AccessController.doPrivileged(new PrivilegedAction<List<Field>>() {
 
             public List<Field> run() {
@@ -104,7 +120,14 @@ public class EnricherProducer implements TestEnricher {
         return declaredAccessableFields;
     }
 
-    static List<Class<?>> getParametersWithAnnotation(final Method method,
+    /**
+     * Returns all the parameters annotated with the given annotation for the specified method
+     *
+     * @param method - the method where the parameters should be examined
+     * @param annotationClass - the annotation the parameters should be annotated with
+     * @return list of found parameters annotated with the given annotation
+     */
+    private List<Class<?>> getParametersWithAnnotation(final Method method,
         final Class<? extends Annotation> annotationClass) {
 
         List<Class<?>> declaredParameters = AccessController
@@ -130,12 +153,26 @@ public class EnricherProducer implements TestEnricher {
         return declaredParameters;
     }
 
-    static boolean isAnnotationPresent(final Annotation[] annotations, final Class<? extends Annotation> needle) {
+    /**
+     * Checks if some annotation is present an the given array of annotations
+     *
+     * @param annotations - array of annotations
+     * @param needle - annotation we are looking for
+     * @return if the annotation is present an the given array of annotations
+     */
+    private boolean isAnnotationPresent(final Annotation[] annotations, final Class<? extends Annotation> needle) {
         return findAnnotation(annotations, needle) != null;
     }
 
+    /**
+     * Finds some annotation in the given array of annotations
+     *
+     * @param annotations - array of annotations
+     * @param needle - annotation we are looking for
+     * @return the found annotation
+     */
     @SuppressWarnings("unchecked")
-    static <T extends Annotation> T findAnnotation(final Annotation[] annotations, final Class<T> needle) {
+    private <T extends Annotation> T findAnnotation(final Annotation[] annotations, final Class<T> needle) {
         for (Annotation annotation : annotations) {
             if (annotation.annotationType() == needle) {
                 return (T) annotation;

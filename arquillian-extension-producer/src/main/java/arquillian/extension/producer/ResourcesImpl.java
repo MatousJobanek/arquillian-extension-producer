@@ -1,7 +1,7 @@
 package arquillian.extension.producer;
 
 /**
- * An implementation of some resources which should be injected into test class
+ * An implementation of {@link Resources} interface which should be injected into a test class
  * 
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */

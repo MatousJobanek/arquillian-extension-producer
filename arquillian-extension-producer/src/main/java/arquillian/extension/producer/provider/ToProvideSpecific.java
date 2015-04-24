@@ -10,7 +10,8 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import arquillian.extension.producer.Resources;
 
 /**
- * Use this annotation in combination with annotation {@link ArquillianResource} to inject new instance of {@link Resources}
+ * Use this annotation in combination with the annotation {@link ArquillianResource} to inject new specific instance of
+ * {@link Resources}
  *
  * @author <a href="mailto:mjobanek@redhat.com">Matous Jobanek</a>
  */
